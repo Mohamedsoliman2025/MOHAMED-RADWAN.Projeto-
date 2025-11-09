@@ -1,0 +1,16 @@
+# Exported from Render on 2025-11-09T07:46:13Z
+version: "1"
+projects:
+- name: Mohamed
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: MOHAMED-RADWAN.Projeto-
+      runtime: python
+      repo: https://github.com/Mohamedsoliman2025/MOHAMED-RADWAN.Projeto-
+      plan: free
+      region: oregon
+      buildCommand: pip install -r requirements.txt
+      startCommand: gunicorn main:app
+      autoDeployTrigger: commit
