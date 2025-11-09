@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash
 from task_controller import TaskController
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.secret_key = "segredo"
 controller = TaskController()
 
