@@ -1,19 +1,123 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciador de Tarefas</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Sistema de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        main {
+            max-width: 700px;
+            background: white;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+        .message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tarefas</h1>
-        <form id="taskForm">
-            <input type="text" id="taskTitle" placeholder="Nova tarefa..." required>
+    <header>
+        <h2>Sistema de Gerenciamento de Tarefas</h2>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="message">
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <h1>Lista de Tarefas</h1>
+
+        <!-- Formulário para adicionar nova tarefa -->
+        <form method="POST" action="/add">
+            <input type="text" name="title" placeholder="Descreva sua tarefa..." required>
             <button type="submit">Adicionar</button>
         </form>
-        <ul id="taskList"></ul>
-    </div>
-    <script src="/static/script.js"></script>
+
+        <!-- Lista de tarefas -->
+        {% if tasks %}
+        <ul>
+            {% for task in tasks %}
+            <li>
+                {{ task.title }}
+                <form method="POST" action="/delete/{{ task.id }}">
+                    <button type="submit" class="delete-btn">Excluir</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Não há tarefas cadastradas no momento.</p>
+        {% endif %}
+    </main>
 </body>
 </html>
