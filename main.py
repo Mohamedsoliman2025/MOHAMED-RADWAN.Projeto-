@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify
-from app.controllers.task_controller import TaskController
+from task_controller import TaskController
 
 app = Flask(__name__)
 
