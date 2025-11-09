@@ -1,5 +1,5 @@
 import unittest
-from app.models.task_model import TaskModel
+from task_model import TaskModel
 
 class TestTaskModel(unittest.TestCase):
 
